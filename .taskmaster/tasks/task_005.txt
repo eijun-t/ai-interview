@@ -1,0 +1,11 @@
+# Task ID: 5
+# Title: Implement Web Search Integration with Serper.dev
+# Status: pending
+# Dependencies: 3
+# Priority: medium
+# Description: Add real-time company information gathering using web search API
+# Details:
+Integrate Serper.dev API, implement search queries for company recruitment pages, IR information, and recent news. Add content parsing and caching (Redis), ensure processing completes within 1 minute with progress indicators.
+
+# Test Strategy:
+Test search accuracy for various company types, verify caching effectiveness, validate processing time limits

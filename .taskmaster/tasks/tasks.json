@@ -1,0 +1,227 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Supabase Authentication System",
+        "description": "Implement user authentication using Supabase Auth with Google, Microsoft, and GitHub OAuth providers",
+        "status": "done",
+        "dependencies": [],
+        "priority": "high",
+        "details": "Configure Supabase project, set up OAuth providers (Google, Microsoft, GitHub), implement authentication hooks and middleware, create user session management. Use @supabase/auth-helpers-nextjs for Next.js integration.",
+        "testStrategy": "Test OAuth flows for all providers, verify session persistence, test authentication middleware protection",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Supabaseプロジェクトのセットアップ",
+            "description": "新規Supabaseプロジェクトを作成し、環境変数を設定する",
+            "details": "1. Supabaseアカウント作成・ログイン\n2. 新規プロジェクト作成\n3. プロジェクトURL・API Keyの取得\n4. .env.localファイルに環境変数設定\n5. @supabase/supabase-jsライブラリのインストール",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 1
+          },
+          {
+            "id": 2,
+            "title": "Supabaseクライアント設定",
+            "description": "Next.js用のSupabaseクライアントを設定し、認証ヘルパーをインストール",
+            "details": "1. @supabase/auth-helpers-nextjsのインストール\n2. lib/supabase.tsファイル作成\n3. クライアント・サーバー用Supabaseクライアント設定\n4. TypeScript型定義の設定",
+            "status": "done",
+            "dependencies": [
+              "1.1"
+            ],
+            "parentTaskId": 1
+          },
+          {
+            "id": 3,
+            "title": "認証コンポーネントの作成",
+            "description": "ログイン・サインアップ・パスワードリセット用のUIコンポーネントを作成",
+            "details": "1. components/auth/LoginForm.tsx作成\n2. components/auth/SignUpForm.tsx作成\n3. components/auth/PasswordResetForm.tsx作成\n4. 既存のbutton, card, textareaコンポーネントを活用\n5. フォームバリデーション実装\n6. エラー表示機能の実装",
+            "status": "done",
+            "dependencies": [
+              "1.2"
+            ],
+            "parentTaskId": 1
+          },
+          {
+            "id": 4,
+            "title": "認証ページの作成",
+            "description": "ログイン・サインアップ・パスワードリセット用のページを作成",
+            "details": "1. app/auth/login/page.tsx作成\n2. app/auth/signup/page.tsx作成\n3. app/auth/reset-password/page.tsx作成\n4. app/auth/layout.tsx作成（認証ページ共通レイアウト）\n5. 各ページに対応するコンポーネントを配置",
+            "status": "done",
+            "dependencies": [
+              "1.3"
+            ],
+            "parentTaskId": 1
+          },
+          {
+            "id": 5,
+            "title": "認証ミドルウェアの実装",
+            "description": "ページ保護のためのミドルウェアとセッション管理を実装",
+            "details": "1. middleware.tsファイル作成\n2. /interviewページの認証保護実装\n3. 未認証時のリダイレクト処理\n4. セッション状態の管理\n5. 認証状態に基づくナビゲーション制御",
+            "status": "done",
+            "dependencies": [
+              "1.2"
+            ],
+            "parentTaskId": 1
+          },
+          {
+            "id": 6,
+            "title": "認証フックとユーティリティの作成",
+            "description": "認証状態管理とユーザー情報取得のためのカスタムフックを作成",
+            "details": "1. hooks/useAuth.ts作成\n2. hooks/useUser.ts作成\n3. 認証状態の監視機能\n4. ログアウト機能の実装\n5. ユーザー情報の取得・更新機能",
+            "status": "done",
+            "dependencies": [
+              "1.2"
+            ],
+            "parentTaskId": 1
+          },
+          {
+            "id": 7,
+            "title": "ナビゲーションとレイアウトの更新",
+            "description": "認証状態に応じたナビゲーションとレイアウトの更新",
+            "details": "1. app/layout.tsxの更新\n2. 認証状態に応じたナビゲーションメニュー\n3. ログイン・ログアウトボタンの実装\n4. ユーザー情報表示の実装\n5. 認証状態に応じたページアクセス制御",
+            "status": "done",
+            "dependencies": [
+              "1.4",
+              "1.6"
+            ],
+            "parentTaskId": 1
+          },
+          {
+            "id": 8,
+            "title": "テストと検証",
+            "description": "認証システム全体のテストと動作検証",
+            "details": "1. メールアドレス/パスワードでのサインアップテスト\n2. ログイン・ログアウト機能のテスト\n3. パスワードリセット機能のテスト\n4. /interviewページの認証保護テスト\n5. セッション永続化のテスト\n6. エラーハンドリングのテスト\n7. レスポンシブデザインの確認",
+            "status": "done",
+            "dependencies": [
+              "1.5",
+              "1.7"
+            ],
+            "parentTaskId": 1
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Design and Implement Database Schema",
+        "description": "Create PostgreSQL database schema for users, companies, interviews, questions, feedback, and industry knowledge",
+        "status": "pending",
+        "dependencies": [
+          1
+        ],
+        "priority": "high",
+        "details": "Design tables: users (profiles, auth data), companies (name, info, industry), interviews (sessions, Q&A history), questions (industry-specific), feedback (evaluations), industry_knowledge (question templates). Set up Supabase migrations and RLS policies.",
+        "testStrategy": "Validate schema with sample data, test RLS policies, verify foreign key constraints and indexes"
+      },
+      {
+        "id": 3,
+        "title": "Build Company Database and Autocomplete System",
+        "description": "Create comprehensive company database with autocomplete functionality for Japanese companies",
+        "status": "pending",
+        "dependencies": [
+          2
+        ],
+        "priority": "high",
+        "details": "Seed database with listed companies (TSE, Mothers, JASDAQ), new graduate recruiting companies, implement fuzzy search with company name normalization, create API endpoint for autocomplete with debouncing.",
+        "testStrategy": "Test autocomplete performance with 10k+ companies, verify search accuracy with partial matches and kanji/katakana variations"
+      },
+      {
+        "id": 4,
+        "title": "Integrate OpenAI GPT-4o API for Question Generation",
+        "description": "Implement AI-powered interview question generation and answer evaluation system",
+        "status": "pending",
+        "dependencies": [
+          2,
+          3
+        ],
+        "priority": "high",
+        "details": "Create OpenAI API client, design prompts for company-specific question generation, implement answer evaluation with scoring criteria (company understanding, logic, enthusiasm, communication). Add rate limiting and error handling.",
+        "testStrategy": "Test question quality with various company types, validate evaluation consistency, verify API rate limiting and error recovery"
+      },
+      {
+        "id": 5,
+        "title": "Implement Web Search Integration with Serper.dev",
+        "description": "Add real-time company information gathering using web search API",
+        "status": "pending",
+        "dependencies": [
+          3
+        ],
+        "priority": "medium",
+        "details": "Integrate Serper.dev API, implement search queries for company recruitment pages, IR information, and recent news. Add content parsing and caching (Redis), ensure processing completes within 1 minute with progress indicators.",
+        "testStrategy": "Test search accuracy for various company types, verify caching effectiveness, validate processing time limits"
+      },
+      {
+        "id": 6,
+        "title": "Create Interactive Interview Chat System",
+        "description": "Build real-time chat interface for conducting mock interviews with AI interviewer",
+        "status": "pending",
+        "dependencies": [
+          4,
+          5
+        ],
+        "priority": "medium",
+        "details": "Implement WebSocket or Server-Sent Events for real-time communication, add typing indicators, allow dynamic question count adjustment, integrate with OpenAI for contextual follow-up questions.",
+        "testStrategy": "Test real-time communication, verify message ordering, test concurrent interviews, validate question flow logic"
+      },
+      {
+        "id": 7,
+        "title": "Implement Web Speech API Integration",
+        "description": "Add voice input/output capabilities with gender selection for speech synthesis",
+        "status": "pending",
+        "dependencies": [
+          6
+        ],
+        "priority": "medium",
+        "details": "Integrate Web Speech API for voice recognition and synthesis, implement male/female voice selection, add fallback for text input, handle browser compatibility issues and permissions.",
+        "testStrategy": "Test voice recognition accuracy, verify speech synthesis quality, test cross-browser compatibility, validate fallback mechanisms"
+      },
+      {
+        "id": 8,
+        "title": "Build Industry-Specific Question Database",
+        "description": "Create comprehensive question database categorized by industry with template variations",
+        "status": "pending",
+        "dependencies": [
+          2
+        ],
+        "priority": "medium",
+        "details": "Research and compile industry-specific interview questions, create question templates for common topics (motivation, achievements), implement question categorization and tagging system, support question inheritance and customization.",
+        "testStrategy": "Validate question coverage across all major industries, test question randomization and relevance scoring"
+      },
+      {
+        "id": 9,
+        "title": "Develop Comprehensive Feedback System",
+        "description": "Create detailed post-interview analysis and feedback generation with scoring metrics",
+        "status": "pending",
+        "dependencies": [
+          4,
+          6
+        ],
+        "priority": "medium",
+        "details": "Implement evaluation algorithms for company understanding, logical thinking, enthusiasm, and communication skills. Generate detailed reports with specific improvement suggestions, save feedback history, create user dashboard for progress tracking.",
+        "testStrategy": "Validate evaluation consistency, test feedback quality with sample interviews, verify report generation and storage"
+      },
+      {
+        "id": 10,
+        "title": "Setup Production Infrastructure and Deployment",
+        "description": "Configure Vercel deployment, Redis caching, and production environment setup",
+        "status": "pending",
+        "dependencies": [
+          1,
+          2
+        ],
+        "priority": "low",
+        "details": "Configure Vercel deployment pipeline, set up Redis for session management and company data caching, implement environment variable management, configure monitoring and logging, set up CI/CD with automated testing.",
+        "testStrategy": "Test deployment pipeline, verify Redis connectivity, validate environment configurations, test production performance"
+      }
+    ],
+    "metadata": {
+      "projectName": "AI Interview System",
+      "totalTasks": 10,
+      "sourceFile": ".taskmaster/docs/prd.txt",
+      "generatedAt": "2025-07-07",
+      "created": "2025-07-08T11:00:07.353Z",
+      "description": "Tasks for master context",
+      "updated": "2025-07-09T14:02:15.970Z"
+    }
+  }
+}

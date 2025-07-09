@@ -1,0 +1,11 @@
+# Task ID: 8
+# Title: Build Industry-Specific Question Database
+# Status: pending
+# Dependencies: 2
+# Priority: medium
+# Description: Create comprehensive question database categorized by industry with template variations
+# Details:
+Research and compile industry-specific interview questions, create question templates for common topics (motivation, achievements), implement question categorization and tagging system, support question inheritance and customization.
+
+# Test Strategy:
+Validate question coverage across all major industries, test question randomization and relevance scoring

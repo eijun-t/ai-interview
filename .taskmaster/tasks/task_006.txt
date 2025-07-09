@@ -1,0 +1,11 @@
+# Task ID: 6
+# Title: Create Interactive Interview Chat System
+# Status: pending
+# Dependencies: 4, 5
+# Priority: medium
+# Description: Build real-time chat interface for conducting mock interviews with AI interviewer
+# Details:
+Implement WebSocket or Server-Sent Events for real-time communication, add typing indicators, allow dynamic question count adjustment, integrate with OpenAI for contextual follow-up questions.
+
+# Test Strategy:
+Test real-time communication, verify message ordering, test concurrent interviews, validate question flow logic

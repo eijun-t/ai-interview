@@ -1,0 +1,11 @@
+# Task ID: 4
+# Title: Integrate OpenAI GPT-4o API for Question Generation
+# Status: pending
+# Dependencies: 2, 3
+# Priority: high
+# Description: Implement AI-powered interview question generation and answer evaluation system
+# Details:
+Create OpenAI API client, design prompts for company-specific question generation, implement answer evaluation with scoring criteria (company understanding, logic, enthusiasm, communication). Add rate limiting and error handling.
+
+# Test Strategy:
+Test question quality with various company types, validate evaluation consistency, verify API rate limiting and error recovery

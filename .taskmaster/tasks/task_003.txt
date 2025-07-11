@@ -9,3 +9,35 @@ Seed database with listed companies (TSE, Mothers, JASDAQ), new graduate recruit
 
 # Test Strategy:
 Test autocomplete performance with 10k+ companies, verify search accuracy with partial matches and kanji/katakana variations
+
+# Subtasks:
+## 1. 新卒採用企業データの収集・整形 [pending]
+### Dependencies: None
+### Description: マイナビ・リクナビから新卒採用企業の正式名称データをスクレイピングし、1万社規模の企業名リストを作成する。
+### Details:
+利用規約を遵守しつつ、企業名のみを抽出・保存する。データはCSV等で管理し、手動で更新できるようにする。
+
+## 2. Supabase PostgreSQLデータベース設計・構築 [pending]
+### Dependencies: 3.1
+### Description: 企業名リストを格納するためのテーブルをSupabase PostgreSQL上に設計・作成する。
+### Details:
+企業名（正式名称）のみを持つシンプルなテーブルを作成し、初期データをインポートする。手動更新フローも設計する。
+
+## 3. 検索用インデックス（GIN）作成とパフォーマンス最適化 [pending]
+### Dependencies: 3.2
+### Description: 部分一致・前方一致検索に最適なGINインデックスを企業名カラムに作成し、100ms以内のレスポンスを目指してパフォーマンスを検証・調整する。
+### Details:
+LIKE/ILIKE検索に対応したインデックス設計。EXPLAIN等でクエリプランを分析し、必要に応じてインデックスやクエリを調整する。
+
+## 4. 企業名オートコンプリートAPIの実装 [pending]
+### Dependencies: 3.3
+### Description: フロントエンドからのリクエストに対し、企業名の部分一致・前方一致検索結果（最大20件）を返すAPIエンドポイント（/api/companies/search）を実装する。
+### Details:
+APIはクエリパラメータqを受け取り、正式名称のみを返す。レスポンス速度・同時アクセス数を考慮し、必要に応じてキャッシュ等も検討する。
+
+## 5. フロントエンドのオートコンプリートUI実装とデバウンス対応 [pending]
+### Dependencies: 3.4
+### Description: APIと連携したオートコンプリートUIを実装し、300msのデバウンス処理を組み込む。
+### Details:
+入力中にAPIへリクエストを送り、正式名称のみを候補として表示。デバウンス処理で無駄なリクエストを抑制する。
+

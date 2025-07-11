@@ -1,6 +1,6 @@
 # Task ID: 2
 # Title: Design and Implement Database Schema
-# Status: pending
+# Status: done
 # Dependencies: 1
 # Priority: high
 # Description: Create PostgreSQL database schema for users, companies, interviews, questions, feedback, and industry knowledge
@@ -9,3 +9,35 @@ Design tables: users (profiles, auth data), companies (name, info, industry), in
 
 # Test Strategy:
 Validate schema with sample data, test RLS policies, verify foreign key constraints and indexes
+
+# Subtasks:
+## 1. ユーザーテーブル設計と実装 [done]
+### Dependencies: None
+### Description: 新卒就活生向けのユーザー情報（名前、大学、学部、部活・サークル、留学経験など）を格納するusersテーブルを設計・実装する。
+### Details:
+usersテーブルには、必要な属性（例：id, name, university, faculty, club, study_abroad, created_atなど）を含める。Supabaseの認証情報と連携できるように設計する。
+
+## 2. 面接セッションテーブル設計と実装 [done]
+### Dependencies: 2.1
+### Description: 面接の履歴やセッション情報を保存するinterview_sessionsテーブルを設計・実装する。
+### Details:
+interview_sessionsテーブルには、ユーザーID（外部キー）、開始日時、終了日時、セッションステータスなどを含める。ユーザーごとの面接履歴が追跡できるようにする。
+
+## 3. セッションやりとり（Q&A履歴）テーブル設計と実装 [done]
+### Dependencies: 2.2
+### Description: 面接中のQ&A履歴を保存するsession_qa_historiesテーブルを設計・実装する。
+### Details:
+session_qa_historiesテーブルには、セッションID（外部キー）、質問ID、ユーザー回答、AIフィードバック（必要に応じて）、タイムスタンプなどを含める。
+
+## 4. 質問・質問テンプレート・業界情報テーブル設計と実装 [done]
+### Dependencies: None
+### Description: 新卒向け質問プール（自己紹介、志望動機、学生時代経験、業界研究）や業界別質問テンプレート、業界情報を管理するquestions、question_templates、industriesテーブルを設計・実装する。
+### Details:
+questionsテーブルには質問文やカテゴリ、industriesテーブルには業界名や説明、question_templatesテーブルには業界IDと紐付いたテンプレート質問を格納する。
+
+## 5. Supabaseマイグレーション・RLSポリシー設定 [done]
+### Dependencies: 2.1, 2.2, 2.3, 2.4
+### Description: 全テーブルのマイグレーションファイル作成と、ユーザーごとにデータアクセスを制限するRLS（Row Level Security）ポリシーを設定する。
+### Details:
+Supabase CLIでマイグレーションを作成し、RLSでユーザー自身のデータのみアクセス可能とする。必要に応じてテスト用のRLSポリシーも用意する。
+

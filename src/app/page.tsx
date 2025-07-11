@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -9,7 +10,6 @@ import {
   MessageCircle, 
   Brain, 
   Target, 
-  Users, 
   CheckCircle, 
   ArrowRight,
   PlayCircle,
@@ -18,12 +18,13 @@ import {
   Shield,
   Sparkles,
   Zap,
-  Globe,
-  Award
+  Award,
+  LogIn
 } from 'lucide-react';
 
 export default function Home() {
   const [isHovered, setIsHovered] = useState(false);
+  const { user, loading } = useAuth();
 
   const features = [
     {
@@ -109,7 +110,8 @@ export default function Home() {
               実際の面接に近い環境で練習し、自信を持って本番に臨みましょう。
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-              <Link href="/interview">
+              {/* 一時的にシンプルなバージョン */}
+              <Link href="/demo">
                 <Button 
                   size="lg" 
                   className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-10 py-4 text-lg rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105"
@@ -117,13 +119,15 @@ export default function Home() {
                   onMouseLeave={() => setIsHovered(false)}
                 >
                   <PlayCircle className="mr-3 h-6 w-6" />
-                  無料で面接練習を始める
+                  無料デモを体験する
                   <ArrowRight className={`ml-3 h-6 w-6 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" className="px-10 py-4 text-lg rounded-2xl border-2 hover:bg-gray-50 transition-all duration-300">
-                <Globe className="mr-3 h-5 w-5" />
-                デモを見る
+              <Button asChild variant="outline" size="lg" className="px-10 py-4 text-lg rounded-2xl border-2 hover:bg-gray-50 transition-all duration-300">
+                <Link href="/auth/login">
+                  <LogIn className="mr-3 h-5 w-5" />
+                  ログイン
+                </Link>
               </Button>
             </div>
 

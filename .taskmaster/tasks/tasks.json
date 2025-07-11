@@ -105,13 +105,69 @@
         "id": 2,
         "title": "Design and Implement Database Schema",
         "description": "Create PostgreSQL database schema for users, companies, interviews, questions, feedback, and industry knowledge",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           1
         ],
         "priority": "high",
         "details": "Design tables: users (profiles, auth data), companies (name, info, industry), interviews (sessions, Q&A history), questions (industry-specific), feedback (evaluations), industry_knowledge (question templates). Set up Supabase migrations and RLS policies.",
-        "testStrategy": "Validate schema with sample data, test RLS policies, verify foreign key constraints and indexes"
+        "testStrategy": "Validate schema with sample data, test RLS policies, verify foreign key constraints and indexes",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "ユーザーテーブル設計と実装",
+            "description": "新卒就活生向けのユーザー情報（名前、大学、学部、部活・サークル、留学経験など）を格納するusersテーブルを設計・実装する。",
+            "dependencies": [],
+            "details": "usersテーブルには、必要な属性（例：id, name, university, faculty, club, study_abroad, created_atなど）を含める。Supabaseの認証情報と連携できるように設計する。",
+            "status": "done",
+            "testStrategy": "テストユーザーを作成し、各カラムへのデータ登録・取得・更新・削除が正しく行えることを確認する。"
+          },
+          {
+            "id": 2,
+            "title": "面接セッションテーブル設計と実装",
+            "description": "面接の履歴やセッション情報を保存するinterview_sessionsテーブルを設計・実装する。",
+            "dependencies": [
+              1
+            ],
+            "details": "interview_sessionsテーブルには、ユーザーID（外部キー）、開始日時、終了日時、セッションステータスなどを含める。ユーザーごとの面接履歴が追跡できるようにする。",
+            "status": "done",
+            "testStrategy": "ユーザーごとに複数の面接セッションを登録し、履歴が正しく紐付くことを確認する。"
+          },
+          {
+            "id": 3,
+            "title": "セッションやりとり（Q&A履歴）テーブル設計と実装",
+            "description": "面接中のQ&A履歴を保存するsession_qa_historiesテーブルを設計・実装する。",
+            "dependencies": [
+              2
+            ],
+            "details": "session_qa_historiesテーブルには、セッションID（外部キー）、質問ID、ユーザー回答、AIフィードバック（必要に応じて）、タイムスタンプなどを含める。",
+            "status": "done",
+            "testStrategy": "面接セッション中に複数のQ&Aを記録し、セッションごとに正しく履歴が取得できることを確認する。"
+          },
+          {
+            "id": 4,
+            "title": "質問・質問テンプレート・業界情報テーブル設計と実装",
+            "description": "新卒向け質問プール（自己紹介、志望動機、学生時代経験、業界研究）や業界別質問テンプレート、業界情報を管理するquestions、question_templates、industriesテーブルを設計・実装する。",
+            "dependencies": [],
+            "details": "questionsテーブルには質問文やカテゴリ、industriesテーブルには業界名や説明、question_templatesテーブルには業界IDと紐付いたテンプレート質問を格納する。",
+            "status": "done",
+            "testStrategy": "各テーブルにサンプルデータを登録し、業界ごとの質問テンプレートや質問プールが正しく取得できることを確認する。"
+          },
+          {
+            "id": 5,
+            "title": "Supabaseマイグレーション・RLSポリシー設定",
+            "description": "全テーブルのマイグレーションファイル作成と、ユーザーごとにデータアクセスを制限するRLS（Row Level Security）ポリシーを設定する。",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Supabase CLIでマイグレーションを作成し、RLSでユーザー自身のデータのみアクセス可能とする。必要に応じてテスト用のRLSポリシーも用意する。",
+            "status": "done",
+            "testStrategy": "異なるユーザーでログインし、他ユーザーのデータにアクセスできないこと、本人のデータにはアクセスできることを確認する。"
+          }
+        ]
       },
       {
         "id": 3,
@@ -123,7 +179,62 @@
         ],
         "priority": "high",
         "details": "Seed database with listed companies (TSE, Mothers, JASDAQ), new graduate recruiting companies, implement fuzzy search with company name normalization, create API endpoint for autocomplete with debouncing.",
-        "testStrategy": "Test autocomplete performance with 10k+ companies, verify search accuracy with partial matches and kanji/katakana variations"
+        "testStrategy": "Test autocomplete performance with 10k+ companies, verify search accuracy with partial matches and kanji/katakana variations",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "新卒採用企業データの収集・整形",
+            "description": "マイナビ・リクナビから新卒採用企業の正式名称データをスクレイピングし、1万社規模の企業名リストを作成する。",
+            "dependencies": [],
+            "details": "利用規約を遵守しつつ、企業名のみを抽出・保存する。データはCSV等で管理し、手動で更新できるようにする。",
+            "status": "pending",
+            "testStrategy": "取得した企業名リストに重複や誤りがないかサンプルチェックを行う。"
+          },
+          {
+            "id": 2,
+            "title": "Supabase PostgreSQLデータベース設計・構築",
+            "description": "企業名リストを格納するためのテーブルをSupabase PostgreSQL上に設計・作成する。",
+            "dependencies": [
+              1
+            ],
+            "details": "企業名（正式名称）のみを持つシンプルなテーブルを作成し、初期データをインポートする。手動更新フローも設計する。",
+            "status": "pending",
+            "testStrategy": "テーブル構造とデータインポートの動作確認。手動更新手順の検証。"
+          },
+          {
+            "id": 3,
+            "title": "検索用インデックス（GIN）作成とパフォーマンス最適化",
+            "description": "部分一致・前方一致検索に最適なGINインデックスを企業名カラムに作成し、100ms以内のレスポンスを目指してパフォーマンスを検証・調整する。",
+            "dependencies": [
+              2
+            ],
+            "details": "LIKE/ILIKE検索に対応したインデックス設計。EXPLAIN等でクエリプランを分析し、必要に応じてインデックスやクエリを調整する。",
+            "status": "pending",
+            "testStrategy": "1万件規模で部分一致・前方一致検索を実行し、レスポンス時間を計測。インデックス利用状況をEXPLAINで確認。"
+          },
+          {
+            "id": 4,
+            "title": "企業名オートコンプリートAPIの実装",
+            "description": "フロントエンドからのリクエストに対し、企業名の部分一致・前方一致検索結果（最大20件）を返すAPIエンドポイント（/api/companies/search）を実装する。",
+            "dependencies": [
+              3
+            ],
+            "details": "APIはクエリパラメータqを受け取り、正式名称のみを返す。レスポンス速度・同時アクセス数を考慮し、必要に応じてキャッシュ等も検討する。",
+            "status": "pending",
+            "testStrategy": "APIに対して様々なクエリでリクエストし、正しい件数・内容・速度でレスポンスが返るか確認。"
+          },
+          {
+            "id": 5,
+            "title": "フロントエンドのオートコンプリートUI実装とデバウンス対応",
+            "description": "APIと連携したオートコンプリートUIを実装し、300msのデバウンス処理を組み込む。",
+            "dependencies": [
+              4
+            ],
+            "details": "入力中にAPIへリクエストを送り、正式名称のみを候補として表示。デバウンス処理で無駄なリクエストを抑制する。",
+            "status": "pending",
+            "testStrategy": "入力速度や連打時の挙動、デバウンスが正しく機能しているか、UIの表示件数・内容を確認。"
+          }
+        ]
       },
       {
         "id": 4,
@@ -221,7 +332,7 @@
       "generatedAt": "2025-07-07",
       "created": "2025-07-08T11:00:07.353Z",
       "description": "Tasks for master context",
-      "updated": "2025-07-09T14:02:15.970Z"
+      "updated": "2025-07-11T01:31:34.032Z"
     }
   }
 }

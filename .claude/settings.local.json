@@ -11,7 +11,24 @@
       "Bash(npm run dev:*)",
       "Bash(mkdir:*)",
       "Bash(supabase:*)",
-      "Bash(brew install:*)"
+      "Bash(brew install:*)",
+      "Bash(npm run scrape:mynavi:*)",
+      "Bash(npm run seed:companies:*)",
+      "WebFetch(domain:job.rikunabi.com)",
+      "Bash(python:*)",
+      "Bash(pip install:*)",
+      "Bash(npm test)",
+      "Bash(npm run:*)",
+      "Bash(pkill:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(kill:*)",
+      "Bash(PORT=3001 npm run dev)",
+      "Bash(cp:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(find:*)",
+      "Bash(curl:*)",
+      "Bash(npx supabase:*)"
     ],
     "deny": []
   }

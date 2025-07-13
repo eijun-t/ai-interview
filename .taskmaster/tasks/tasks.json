@@ -173,7 +173,7 @@
         "id": 3,
         "title": "Build Company Database and Autocomplete System",
         "description": "Create comprehensive company database with autocomplete functionality for Japanese companies",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           2
         ],
@@ -187,7 +187,7 @@
             "description": "マイナビ・リクナビから新卒採用企業の正式名称データをスクレイピングし、1万社規模の企業名リストを作成する。",
             "dependencies": [],
             "details": "利用規約を遵守しつつ、企業名のみを抽出・保存する。データはCSV等で管理し、手動で更新できるようにする。",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "取得した企業名リストに重複や誤りがないかサンプルチェックを行う。"
           },
           {
@@ -198,7 +198,7 @@
               1
             ],
             "details": "企業名（正式名称）のみを持つシンプルなテーブルを作成し、初期データをインポートする。手動更新フローも設計する。",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "テーブル構造とデータインポートの動作確認。手動更新手順の検証。"
           },
           {
@@ -209,7 +209,7 @@
               2
             ],
             "details": "LIKE/ILIKE検索に対応したインデックス設計。EXPLAIN等でクエリプランを分析し、必要に応じてインデックスやクエリを調整する。",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "1万件規模で部分一致・前方一致検索を実行し、レスポンス時間を計測。インデックス利用状況をEXPLAINで確認。"
           },
           {
@@ -220,7 +220,7 @@
               3
             ],
             "details": "APIはクエリパラメータqを受け取り、正式名称のみを返す。レスポンス速度・同時アクセス数を考慮し、必要に応じてキャッシュ等も検討する。",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "APIに対して様々なクエリでリクエストし、正しい件数・内容・速度でレスポンスが返るか確認。"
           },
           {
@@ -231,7 +231,7 @@
               4
             ],
             "details": "入力中にAPIへリクエストを送り、正式名称のみを候補として表示。デバウンス処理で無駄なリクエストを抑制する。",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "入力速度や連打時の挙動、デバウンスが正しく機能しているか、UIの表示件数・内容を確認。"
           }
         ]
@@ -240,14 +240,70 @@
         "id": 4,
         "title": "Integrate OpenAI GPT-4o API for Question Generation",
         "description": "Implement AI-powered interview question generation and answer evaluation system",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           2,
           3
         ],
         "priority": "high",
         "details": "Create OpenAI API client, design prompts for company-specific question generation, implement answer evaluation with scoring criteria (company understanding, logic, enthusiasm, communication). Add rate limiting and error handling.",
-        "testStrategy": "Test question quality with various company types, validate evaluation consistency, verify API rate limiting and error recovery"
+        "testStrategy": "Test question quality with various company types, validate evaluation consistency, verify API rate limiting and error recovery",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set Up Next.js API Routes and OpenAI GPT-4o-mini Client",
+            "description": "Initialize the Next.js backend with API routes and configure the OpenAI GPT-4o-mini client for secure and efficient communication.",
+            "dependencies": [],
+            "details": "Create API endpoints in Next.js for handling question generation and answer evaluation requests. Set up environment variables for the OpenAI API key and ensure proper error handling and rate limiting in the API routes.",
+            "status": "done",
+            "testStrategy": "Verify API endpoints respond correctly to test requests, handle errors gracefully, and enforce rate limits."
+          },
+          {
+            "id": 2,
+            "title": "Design Dynamic Prompt Templates for Company-Specific Question Generation",
+            "description": "Develop prompt templates that leverage company data to generate relevant interview questions, adjusting for interview duration and category.",
+            "dependencies": [
+              1
+            ],
+            "details": "Fetch company information from the companies table and dynamically construct prompts for GPT-4o-mini to generate questions tailored to the selected company, interview category, and time constraints.",
+            "status": "done",
+            "testStrategy": "Test prompt outputs for various companies, categories, and durations to ensure relevance and diversity."
+          },
+          {
+            "id": 3,
+            "title": "Implement Real-Time Voice Interaction with OpenAI TTS/STT APIs",
+            "description": "Enable real-time audio-based interview sessions using OpenAI's TTS and STT APIs, supporting dynamic follow-up questions based on user responses.",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Integrate TTS for question delivery and STT for capturing user answers. Ensure the system can generate follow-up questions in real time, not just from a static list, and synchronize with the 3D avatar's mouth movements.",
+            "status": "done",
+            "testStrategy": "Simulate interview sessions to confirm accurate voice recognition, natural TTS output, and responsive follow-up question generation."
+          },
+          {
+            "id": 4,
+            "title": "Integrate 3D Avatar with Voice and Mouth Synchronization",
+            "description": "Connect the 3D avatar system to the audio pipeline, allowing users to select gender and ensuring mouth movements sync with spoken questions and answers.",
+            "dependencies": [
+              3
+            ],
+            "details": "Utilize prepared 3D avatar assets and implement real-time mouth movement synchronization based on TTS output. Provide UI for avatar gender selection.",
+            "status": "done",
+            "testStrategy": "Visually inspect avatar behavior during interviews to ensure accurate mouth sync and correct avatar selection."
+          },
+          {
+            "id": 5,
+            "title": "Batch Evaluate Interview Answers Post-Session",
+            "description": "After the interview ends, process all user answers in a single batch using GPT-4o-mini to score responses based on company understanding, logic, enthusiasm, and communication.",
+            "dependencies": [
+              3
+            ],
+            "details": "Aggregate session answers from session_qa_histories, send them to GPT-4o-mini for evaluation using predefined criteria, and display results to the user without saving them.",
+            "status": "done",
+            "testStrategy": "Run end-to-end interview simulations and verify that batch evaluation produces accurate, criteria-based feedback for all answers."
+          }
+        ]
       },
       {
         "id": 5,
@@ -259,7 +315,63 @@
         ],
         "priority": "medium",
         "details": "Integrate Serper.dev API, implement search queries for company recruitment pages, IR information, and recent news. Add content parsing and caching (Redis), ensure processing completes within 1 minute with progress indicators.",
-        "testStrategy": "Test search accuracy for various company types, verify caching effectiveness, validate processing time limits"
+        "testStrategy": "Test search accuracy for various company types, verify caching effectiveness, validate processing time limits",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Integrate Serper.dev API with Next.js API Routes",
+            "description": "Set up the Serper.dev API integration within Next.js API routes, ensuring authentication with the provided API key and support for Japanese-language queries.",
+            "dependencies": [],
+            "details": "Configure API endpoints to accept company names and construct three specific queries: '[企業名] 新卒採用', '[企業名] IR', and '[企業名] 事業概要'. Ensure the API key is securely managed and requests are sent in Japanese.",
+            "status": "pending",
+            "testStrategy": "Send test requests with sample company names and verify that the API returns valid search results for each query."
+          },
+          {
+            "id": 2,
+            "title": "Implement Search Result Retrieval and Page Content Parsing",
+            "description": "For each query, retrieve the top 5 search results and fetch the full content of each result URL. Parse and extract the main text content from each page.",
+            "dependencies": [
+              1
+            ],
+            "details": "Use a headless browser or HTTP client to fetch and parse the HTML content of each URL. Handle cases where page retrieval or parsing fails by skipping those entries.",
+            "status": "pending",
+            "testStrategy": "Verify that for each query, up to 5 pages are fetched and their main text content is extracted. Confirm that failures are logged and skipped without interrupting the process."
+          },
+          {
+            "id": 3,
+            "title": "Implement Redis Caching for Company Search Results",
+            "description": "Cache the parsed content for each company in Redis with a 1-day expiration, using the company name as the cache key.",
+            "dependencies": [
+              2
+            ],
+            "details": "Before executing a new search, check Redis for existing cached results. If present, use the cached data; otherwise, proceed with the search and store the results in Redis.",
+            "status": "pending",
+            "testStrategy": "Test cache hits and misses by repeating searches for the same company within and after the cache expiration period. Confirm correct cache key usage and expiration."
+          },
+          {
+            "id": 4,
+            "title": "Implement Real-Time Progress Updates via WebSocket or SSE",
+            "description": "Provide real-time progress updates to the frontend during the search and parsing process using WebSocket or Server-Sent Events (SSE).",
+            "dependencies": [
+              2
+            ],
+            "details": "Emit progress events at key stages (e.g., per query, per page fetched) to update a progress bar on the '面接官が準備中です' screen. Ensure updates are sent until completion or timeout.",
+            "status": "pending",
+            "testStrategy": "Simulate the process and verify that progress updates are received in real time by the frontend, accurately reflecting backend processing stages."
+          },
+          {
+            "id": 5,
+            "title": "Implement Error Handling and Timeout Management",
+            "description": "Ensure robust error handling for missing search results, page fetch failures, and API errors. Guarantee that the process completes within 30 seconds and always proceeds to the interview step.",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Design the workflow to skip failed pages, continue on API errors, and enforce a 30-second timeout. Ensure that even if no results are found, the system advances to the next step with an empty or partial context.",
+            "status": "pending",
+            "testStrategy": "Induce errors (e.g., network failures, empty results) and confirm that the system handles them gracefully, completes within the time limit, and always transitions to the interview phase."
+          }
+        ]
       },
       {
         "id": 6,
@@ -332,7 +444,7 @@
       "generatedAt": "2025-07-07",
       "created": "2025-07-08T11:00:07.353Z",
       "description": "Tasks for master context",
-      "updated": "2025-07-11T01:31:34.032Z"
+      "updated": "2025-07-12T10:54:08.212Z"
     }
   }
 }

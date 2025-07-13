@@ -89,6 +89,44 @@ export type Database = {
           keywords?: string | null
         }
       }
+      companies: {
+        Row: {
+          id: string
+          created_at: string
+          name: string
+          name_kana: string | null
+          industry_id: string | null
+          description: string | null
+          employee_count: string | null
+          location: string | null
+          website_url: string | null
+          source_url: string | null
+        }
+        Insert: {
+          id?: string
+          created_at?: string
+          name: string
+          name_kana?: string | null
+          industry_id?: string | null
+          description?: string | null
+          employee_count?: string | null
+          location?: string | null
+          website_url?: string | null
+          source_url?: string | null
+        }
+        Update: {
+          id?: string
+          created_at?: string
+          name?: string
+          name_kana?: string | null
+          industry_id?: string | null
+          description?: string | null
+          employee_count?: string | null
+          location?: string | null
+          website_url?: string | null
+          source_url?: string | null
+        }
+      }
       questions: {
         Row: {
           id: string

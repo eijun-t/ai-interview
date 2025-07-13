@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useAuth } from '@/hooks/useAuth';
+// import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -24,7 +24,7 @@ import {
 
 export default function Home() {
   const [isHovered, setIsHovered] = useState(false);
-  const { user, loading } = useAuth();
+  // const { user } = useAuth(); // Uncomment when needed
 
   const features = [
     {
@@ -283,7 +283,7 @@ export default function Home() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 italic leading-relaxed">
-                    "{testimonial.comment}"
+                    &ldquo;{testimonial.comment}&rdquo;
                   </p>
                 </CardContent>
               </Card>

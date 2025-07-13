@@ -31,7 +31,7 @@ export default function LoginForm() {
       } else {
         window.location.href = '/interview'
       }
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred')
     } finally {
       setLoading(false)

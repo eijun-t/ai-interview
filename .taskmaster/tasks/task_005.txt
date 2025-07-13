@@ -9,3 +9,35 @@ Integrate Serper.dev API, implement search queries for company recruitment pages
 
 # Test Strategy:
 Test search accuracy for various company types, verify caching effectiveness, validate processing time limits
+
+# Subtasks:
+## 1. Integrate Serper.dev API with Next.js API Routes [pending]
+### Dependencies: None
+### Description: Set up the Serper.dev API integration within Next.js API routes, ensuring authentication with the provided API key and support for Japanese-language queries.
+### Details:
+Configure API endpoints to accept company names and construct three specific queries: '[企業名] 新卒採用', '[企業名] IR', and '[企業名] 事業概要'. Ensure the API key is securely managed and requests are sent in Japanese.
+
+## 2. Implement Search Result Retrieval and Page Content Parsing [pending]
+### Dependencies: 5.1
+### Description: For each query, retrieve the top 5 search results and fetch the full content of each result URL. Parse and extract the main text content from each page.
+### Details:
+Use a headless browser or HTTP client to fetch and parse the HTML content of each URL. Handle cases where page retrieval or parsing fails by skipping those entries.
+
+## 3. Implement Redis Caching for Company Search Results [pending]
+### Dependencies: 5.2
+### Description: Cache the parsed content for each company in Redis with a 1-day expiration, using the company name as the cache key.
+### Details:
+Before executing a new search, check Redis for existing cached results. If present, use the cached data; otherwise, proceed with the search and store the results in Redis.
+
+## 4. Implement Real-Time Progress Updates via WebSocket or SSE [pending]
+### Dependencies: 5.2
+### Description: Provide real-time progress updates to the frontend during the search and parsing process using WebSocket or Server-Sent Events (SSE).
+### Details:
+Emit progress events at key stages (e.g., per query, per page fetched) to update a progress bar on the '面接官が準備中です' screen. Ensure updates are sent until completion or timeout.
+
+## 5. Implement Error Handling and Timeout Management [pending]
+### Dependencies: 5.3, 5.4
+### Description: Ensure robust error handling for missing search results, page fetch failures, and API errors. Guarantee that the process completes within 30 seconds and always proceeds to the interview step.
+### Details:
+Design the workflow to skip failed pages, continue on API errors, and enforce a 30-second timeout. Ensure that even if no results are found, the system advances to the next step with an empty or partial context.
+

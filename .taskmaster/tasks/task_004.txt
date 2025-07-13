@@ -1,6 +1,6 @@
 # Task ID: 4
 # Title: Integrate OpenAI GPT-4o API for Question Generation
-# Status: pending
+# Status: done
 # Dependencies: 2, 3
 # Priority: high
 # Description: Implement AI-powered interview question generation and answer evaluation system
@@ -9,3 +9,35 @@ Create OpenAI API client, design prompts for company-specific question generatio
 
 # Test Strategy:
 Test question quality with various company types, validate evaluation consistency, verify API rate limiting and error recovery
+
+# Subtasks:
+## 1. Set Up Next.js API Routes and OpenAI GPT-4o-mini Client [done]
+### Dependencies: None
+### Description: Initialize the Next.js backend with API routes and configure the OpenAI GPT-4o-mini client for secure and efficient communication.
+### Details:
+Create API endpoints in Next.js for handling question generation and answer evaluation requests. Set up environment variables for the OpenAI API key and ensure proper error handling and rate limiting in the API routes.
+
+## 2. Design Dynamic Prompt Templates for Company-Specific Question Generation [done]
+### Dependencies: 4.1
+### Description: Develop prompt templates that leverage company data to generate relevant interview questions, adjusting for interview duration and category.
+### Details:
+Fetch company information from the companies table and dynamically construct prompts for GPT-4o-mini to generate questions tailored to the selected company, interview category, and time constraints.
+
+## 3. Implement Real-Time Voice Interaction with OpenAI TTS/STT APIs [done]
+### Dependencies: 4.1, 4.2
+### Description: Enable real-time audio-based interview sessions using OpenAI's TTS and STT APIs, supporting dynamic follow-up questions based on user responses.
+### Details:
+Integrate TTS for question delivery and STT for capturing user answers. Ensure the system can generate follow-up questions in real time, not just from a static list, and synchronize with the 3D avatar's mouth movements.
+
+## 4. Integrate 3D Avatar with Voice and Mouth Synchronization [done]
+### Dependencies: 4.3
+### Description: Connect the 3D avatar system to the audio pipeline, allowing users to select gender and ensuring mouth movements sync with spoken questions and answers.
+### Details:
+Utilize prepared 3D avatar assets and implement real-time mouth movement synchronization based on TTS output. Provide UI for avatar gender selection.
+
+## 5. Batch Evaluate Interview Answers Post-Session [done]
+### Dependencies: 4.3
+### Description: After the interview ends, process all user answers in a single batch using GPT-4o-mini to score responses based on company understanding, logic, enthusiasm, and communication.
+### Details:
+Aggregate session answers from session_qa_histories, send them to GPT-4o-mini for evaluation using predefined criteria, and display results to the user without saving them.
+
